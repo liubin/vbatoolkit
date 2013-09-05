@@ -35,3 +35,37 @@ Error_Handle:
 
 End Function
 
+' list files into a array
+' path : target flder
+' filter : dir filter ,for example "\*.doc"
+' why this function? because you can not use dir nested.
+Function ListFiles(path As String, filter As String)
+  
+  Dim buf As String
+  Dim size  As Integer
+  Dim files() As String
+  
+  ' set array's size to 0
+  size = 0
+  
+  ' get first file
+  buf = dir(path & filter)
+  
+  Do While buf <> ""
+    
+    'redim array
+    ReDim Preserve files(size)
+    
+    'push file to array
+    files(size) = buf
+    
+    size = size + 1
+    
+    'get next file
+    buf = dir()
+  Loop
+  
+  ListFiles = files
+
+End Function
+
